@@ -17,15 +17,15 @@ namespace FileManager
             var linesInFile = File.ReadAllLines(filename);
             var pages = linesInFile.Length / lines;
 
-            var page = 1;
+            var page = 1; //счет начинаю именно с 1, потому что pages - это целая часть от деления массива на строки. То есть это не массив и там нет 0 элемента.
             PrintSelectedPage(page, pages, lines, linesInFile);
 
             //Console.TreatControlCAsInput = true;
-            
+            ConsoleKey key; 
             do
             {
-                var key = Console.ReadKey(true).Key;
 
+                key = Console.ReadKey(true).Key;
                 if (key == ConsoleKey.RightArrow & page < pages)
                 {
                     page ++;
@@ -41,15 +41,16 @@ namespace FileManager
                     PrintSelectedPage(page, pages, lines, linesInFile);
                 }
 
-            } while (Console.ReadKey().Key != ConsoleKey.Escape);
+            } while (key != ConsoleKey.Escape);
 
             static void PrintSelectedPage(int page, int pages, int lines, string[] linesInFile) {
                 Console.Clear();
-               if (page == 0)
+
+                if (page == 0)
                 {
                     Console.WriteLine("Check your code. You use page number 0 somwhere");
                 }
-                if (page < pages+1)
+                if (page < pages + 1)
                 {
                     for (int i = lines * (page - 1); i < lines * page; i++)
                     {
